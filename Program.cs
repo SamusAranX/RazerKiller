@@ -1,21 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
+using System.Reflection;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace RazerKiller {
 	internal static class Program {
+
 		private static void Main(string[] args) {
 			Console.Write($"[{DateTime.Now.ToLongTimeString()}] Starting ");
 			Console.ForegroundColor = ConsoleColor.Green;
 			Console.Write("Razer");
 			Console.ForegroundColor = ConsoleColor.Red;
-			Console.Write("Killer");
+			Console.Write("Killer ");
 			Console.ResetColor();
+
+			var versionString = Assembly.GetExecutingAssembly().GetName().Version.ToString().TrimEnd('0', '.');
+			Console.Write($"v{versionString}");
 			Console.WriteLine("...");
+
+			WinApi.ShowWindow(Process.GetCurrentProcess().MainWindowHandle, WinApi.SW_MINIMIZE);
 
 			while (true) {
 				var gameManagerProcesses = Process.GetProcessesByName("GameManagerService");
